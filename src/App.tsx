@@ -1,10 +1,15 @@
 import "./App.css";
-import LoginForm from "./components/loginForm";
+import { Route, Routes } from "react-router-dom";
+import Iniciar from "./pages/Iniciar";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <>
-      <LoginForm onLogin={() => {}}></LoginForm>
+      <Routes>
+        <Route path="/" element={<Iniciar />} />
+        <Route path="/login" element={<Home />} />
+      </Routes>
     </>
   );
 }
