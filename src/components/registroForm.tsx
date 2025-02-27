@@ -4,10 +4,15 @@ import "../styles/login.css";
 const RegistroForm: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordRepeat, setPasswordRepeat] = useState("");
+  let isAllValid = false;
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
+    if (username !== "" && password !== "" && password !== passwordRepeat) {
+      isAllValid = false;
+    }
     event.preventDefault();
-    // onLogin(username, password);
+    // Refistrar en la BBDD
   };
 
   return (
@@ -61,9 +66,9 @@ const RegistroForm: React.FC = () => {
             className="shadow appearance-none border rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
             id="passwordRepeat"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Ingresa tu contraseña"
+            value={passwordRepeat}
+            onChange={(e) => setPasswordRepeat(e.target.value)}
+            placeholder="Repetir contraseña"
             required
           />
         </div>
@@ -81,6 +86,9 @@ const RegistroForm: React.FC = () => {
             Registrar
           </button>
         </div>
+        {!isAllValid && (
+          <p className="text-red-500 mt-4">La contraseña debe coincidir</p>
+        )}
       </form>
     </div>
   );
