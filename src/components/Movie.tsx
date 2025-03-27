@@ -6,7 +6,7 @@ const Movie: React.FC<IMovie> = (item) => {
     return (
         <div
         key={item.id}
-        className="movie-card bg-white p-4 rounded-lg shadow-md flex flex-col justify-between border-4 border-blue-300"
+        className="movie-card bg-white p-1 rounded-lg shadow-md flex flex-col justify-between border-2 border-blue-300"
     >
         <img
             src={item.img}
@@ -17,7 +17,7 @@ const Movie: React.FC<IMovie> = (item) => {
             {item.title}
         </h2>
         <button
-            className="bg-red-500 text-white py-1 px-4 rounded-md shadow hover:bg-red-600 transition-all self-center cursor-pointer"
+            className="bg-green-800 text-white py-1 px-4 rounded-md shadow hover:bg-green-600 transition-all self-center cursor-pointer"
         >
             Añadir
         </button>
