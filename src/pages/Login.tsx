@@ -1,10 +1,15 @@
 import React from "react";
-import LoginForm from "../components/loginForm";
+
+import NavBar from "../components/shared/NavBar";
+import Footer from "../components/shared/Footer";
+import LoginForm from "../components/auth/LoginFormm";
 
 const Login: React.FC = () => {
   return (
     <>
+    <NavBar/>
       <LoginForm />
+    <Footer/>
     </>
   );
 };

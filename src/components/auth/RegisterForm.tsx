@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "../styles/login.css";
 
-const RegistroForm: React.FC = () => {
+
+const RegisterForm: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
@@ -94,4 +94,4 @@ const RegistroForm: React.FC = () => {
   );
 };
 
-export default RegistroForm;
+export default RegisterForm;
