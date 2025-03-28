@@ -8,7 +8,7 @@ import Movie from './Movie';
 const movieViewModel = new MovieVM(); // --> Instancia del ViewModel
 
 const MovieList: React.FC = () => {
-    const { items } = useMovieViewModel(movieViewModel);
+    const { items } = useMovieViewModel(movieViewModel); // Hook con instancia del ViewModel (MovieVM)
 
     return (
         <div className="movie-container min-h-screen bg-gradient-to-br from-gray-100 to-blue-200 flex items-center justify-center p-4">

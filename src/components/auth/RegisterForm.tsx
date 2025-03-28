@@ -1,29 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
+import { RegisterVM } from "../../viewModels/RegisterVM";
+import { useRegisterViewModel } from "../../hooks/RegisterHook";
 
+const registerViewModel = new RegisterVM();
 
 const RegisterForm: React.FC = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordRepeat, setPasswordRepeat] = useState("");
-  let isAllValid = false;
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    if (username !== "" && password !== "" && password !== passwordRepeat) {
-      isAllValid = false;
-    }
-    event.preventDefault();
-    // Refistrar en la BBDD
-  };
-
+  
+  const {
+    setNombre, 
+    setEmail, 
+    setPassword, 
+    setPasswordRepeat} = useRegisterViewModel(registerViewModel);
+  
   return (
     <div className="flex items-center justify-center min-h-screen bg-blue-200 rounded-xl">
       <form
-        className="bg-white shadow-lg rounded-lg px-10 py-12 w-full max-w-md"
-        onSubmit={handleSubmit}
+        className="bg-white shadow-lg rounded-lg px-10 py-12 w-full max-w-md text-left"
+        onSubmit={(e) => registerViewModel.handleSubmit(e)}
       >
+        {/* Nombre de usuario */}
         <div className="mb-6">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-gray-700 text-sm font-bold mb-2 ml-4"
             htmlFor="username"
           >
             Nombre de usuario
@@ -32,15 +30,31 @@ const RegisterForm: React.FC = () => {
             className="shadow appearance-none border rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
             id="username"
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setNombre(e.target.value)}
             placeholder="Ingresa tu usuario"
             required
           />
         </div>
+        <div className="mb-6">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2 ml-4"
+            htmlFor="email"
+          >
+            Email
+          </label>
+          <input
+            className="shadow appearance-none border rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            id="email"
+            type="email"
+            placeholder="Ingresa tu usuario"
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        {/* Password */}
         <div className="mb-8">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-gray-700 text-sm font-bold mb-2 ml-4"
             htmlFor="password"
           >
             Contraseña
@@ -49,15 +63,15 @@ const RegisterForm: React.FC = () => {
             className="shadow appearance-none border rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
             id="password"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
             placeholder="Ingresa tu contraseña"
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
+        {/* Repetir password */}
         <div className="mb-8">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-gray-700 text-sm font-bold mb-2 ml-4"
             htmlFor="passwordRepeat"
           >
             Repetir contraseña
@@ -66,19 +80,14 @@ const RegisterForm: React.FC = () => {
             className="shadow appearance-none border rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
             id="passwordRepeat"
             type="password"
-            value={passwordRepeat}
-            onChange={(e) => setPasswordRepeat(e.target.value)}
             placeholder="Repetir contraseña"
+            onChange={(e) => setPasswordRepeat(e.target.value)}
             required
           />
+
         </div>
+        {/* Registrar */}
         <div className="flex items-center justify-center">
-          <button
-            className="bg-blue-500 text-white font-bold py-3 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 m-1 w-100"
-            type="submit"
-          >
-            Iniciar
-          </button>
           <button
             className="bg-blue-500 text-white font-bold py-3 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 w-100"
             type="submit"
@@ -86,9 +95,6 @@ const RegisterForm: React.FC = () => {
             Registrar
           </button>
         </div>
-        {!isAllValid && (
-          <p className="text-red-500 mt-4">La contraseña debe coincidir</p>
-        )}
       </form>
     </div>
   );
