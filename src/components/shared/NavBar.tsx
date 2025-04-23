@@ -36,7 +36,6 @@ const NavBar: React.FC = () => {
               )}
               {user && <li><button onClick={handleLogOut} className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">Logout</button></li>}
             </ul>
-            <button type="button" className="md:hidden text-gray-800 hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">Menu</button>
           </section>
         </div>
       </nav>
