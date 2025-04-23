@@ -1,4 +1,5 @@
-import { IUsuario, Rol } from "../models/IUsuario";
+import { Role } from "../models/IRole";
+import { IUsuario } from "../models/IUsuario";
 import { registerUserToDatabase } from "../services/RegsterService";
 
 export class RegisterVM {
@@ -8,7 +9,7 @@ export class RegisterVM {
     private passwordRepeat: string = "";
     
     constructor(){
-        this.usuario = {nombre: "", password: "", rol: Rol.INVITADO, email: ""};
+        this.usuario = {nombre: "", password: "", role: Role.INVITADO, email: ""};
     }
 
     // Meter usuario
@@ -16,7 +17,7 @@ export class RegisterVM {
         if (newUsuario) {
             
             this.usuario = newUsuario; // Decimos que sera el mismo usuario
-            this.usuario.rol = Rol.REGISTRADO; // Cambiamos el rol a registrado
+            this.usuario.role = Role.REGISTRADO; // Cambiamos el rol a registrado
 
             this.usuario = await registerUserToDatabase(newUsuario);
             this.notifyChange();
