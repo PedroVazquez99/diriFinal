@@ -1,20 +1,32 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { authService } from "../../services/AuthService";
 
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string>('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    // onLogin(username, password);
-  };
-
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const userCredential
+        = await authService.signIn(username, password);
+      console.log("Usuario autenticado:", userCredential.user);
+      navigate('/home'); // Redirigir al Dashboard después de 2 segundos
+    } catch (error: any) {
+      console.error("Error al iniciar sesión:", error);
+      setError(error.message);
+    }
+  }
   return (
     <div className="flex items-center justify-center min-h-screen bg-blue-200 rounded-xl">
       <form
         className="bg-white shadow-lg rounded-lg px-10 py-12 w-full max-w-md"
-        onSubmit={handleSubmit}
+        onSubmit={(e) => handleLogin(e)}
       >
         <h2 className="text-3xl font-extrabold mb-8 text-center text-gray-800">
           Login
@@ -70,6 +82,7 @@ const LoginForm: React.FC = () => {
       </form>
     </div>
   );
+
 };
 
 export default LoginForm;
