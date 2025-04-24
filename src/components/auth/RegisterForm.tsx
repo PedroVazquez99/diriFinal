@@ -1,22 +1,30 @@
 import React from "react";
 import { RegisterVM } from "../../viewModels/RegisterVM";
 import { useRegisterViewModel } from "../../hooks/RegisterHook";
+import { useNavigate } from "react-router-dom";
 
 const registerViewModel = new RegisterVM();
 
 const RegisterForm: React.FC = () => {
-  
+  const navigate = useNavigate();
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    console.log("handleFormSubmit", e);
+    registerViewModel.handleSubmit(e, navigate);
+  };
+
   const {
-    setNombre, 
-    setEmail, 
-    setPassword, 
-    setPasswordRepeat} = useRegisterViewModel(registerViewModel);
-  
+    setNombre,
+    setEmail,
+    setPassword,
+    setPasswordRepeat
+  } = useRegisterViewModel(registerViewModel);
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-blue-200 rounded-xl">
       <form
         className="bg-white shadow-lg rounded-lg px-10 py-12 w-full max-w-md text-left"
-        onSubmit={(e) => registerViewModel.handleSubmit(e)}
+        onSubmit={(e) => handleFormSubmit(e)}
       >
         {/* Nombre de usuario */}
         <div className="mb-6">
@@ -91,6 +99,7 @@ const RegisterForm: React.FC = () => {
           <button
             className="bg-blue-500 text-white font-bold py-3 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 w-100"
             type="submit"
+
           >
             Registrar
           </button>

@@ -7,6 +7,7 @@ import { IUsuario } from '../models/IUsuario';
 export const useRegisterViewModel = (viewModel: RegisterVM) => {
     const [usuario, setUsuario] = useState<IUsuario>(viewModel.getUsuario());
     const [passwordRepeat, setPasswordRepeat] = useState<string>(viewModel.getPasswordRepeat());
+
     useEffect(() => {
         // Nos suscribimos a los cambios del ViewModel
         const unsubscribe = viewModel.subscribe(() => {
@@ -16,7 +17,7 @@ export const useRegisterViewModel = (viewModel: RegisterVM) => {
 
         // Al desmontar el componente, nos desuscribimos
         return () => unsubscribe();
-    }, [viewModel]);
+    }, [viewModel]);    
 
     return {
         usuario,
@@ -24,6 +25,6 @@ export const useRegisterViewModel = (viewModel: RegisterVM) => {
         setNombre: (nombre: string) => viewModel.setNombre(nombre),
         setEmail: (email: string) => viewModel.setEmail(email),
         setPassword: (password: string) => viewModel.setPassword(password),
-        setPasswordRepeat: (passwordRepeat: string) => viewModel.setPasswordRepeat(passwordRepeat),
+        setPasswordRepeat: (passwordRepeat: string) => viewModel.setPasswordRepeat(passwordRepeat)
     };
 };

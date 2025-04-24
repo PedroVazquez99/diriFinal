@@ -1,4 +1,4 @@
-import { getDatabase, ref, get } from 'firebase/database';
+import { getDatabase, ref, get, set } from 'firebase/database';
 import {app} from '../../firebase/firebase'; // Asegúrate de que la ruta sea correcta
 import { Role } from '../models/IRole';
 import { IUserDatabaseService } from '../models/IUserDatabaseService';
@@ -27,5 +27,11 @@ export class FirebaseDatabaseService implements IUserDatabaseService {
         }
 
         return [Role.INVITADO]; // Si no existe el usuario, se devuelve el rol de invitado por defecto.
+    }
+
+    async setUserRoles(uid: string, roles: any): Promise<void> {
+        const db = getDatabase(app);
+        const rolesRef = ref(db, `users/${uid}/roles`);
+        const snapshot = set(rolesRef, roles);
     }
 }

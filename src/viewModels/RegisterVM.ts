@@ -1,12 +1,16 @@
+import { NavigateFunction } from "react-router-dom";
 import { Role } from "../models/IRole";
 import { IUsuario } from "../models/IUsuario";
 import { registerUserToDatabase } from "../services/RegsterService";
-
+import { authService } from "../services/AuthService";
 export class RegisterVM {
 
     private subscribers: Array<() => void> = [];
     private usuario: IUsuario;
     private passwordRepeat: string = "";
+    
+    private error: string = '';
+    private success: string = '';
     
     constructor(){
         this.usuario = {nombre: "", password: "", role: Role.INVITADO, email: ""};
@@ -27,16 +31,29 @@ export class RegisterVM {
     public getUsuario(): IUsuario { return this.usuario;}
     public getPasswordRepeat(): string { return this.passwordRepeat; }
 
-    public async handleSubmit (event: React.FormEvent): Promise<boolean> {
+    public async handleSubmit (e: React.FormEvent<HTMLFormElement>, navigate: NavigateFunction): Promise<boolean> {
         
-        console.log(this.usuario);
-        if (this.usuario.nombre !== "" && 
-            this.usuario.password !== "" && 
-            this.usuario.password !== this.passwordRepeat) {
-            return false;
+        e.preventDefault();
+        this.setError('');
+    
+        try {
+            console.log("Usuario registrado:", this.usuario);
+            const userCredential = await authService.signUp(this.usuario.email, this.usuario.password);
+            console.log("Usuario registrado:", userCredential);
+            // Crear registro en BBDD con roles iniciales (admin: false)
+            await authService.setUserRoles(userCredential.user.uid, {
+                email: userCredential.user.email,
+                roles: { admin: false }
+            });
+            this.setSuccess('Registro exitoso. Redirigiendo al Inicio...');
+            setTimeout(() => {
+                navigate('/home'); // Redirigir al Dashboard después de 2 segundos
+            }, 1500);
+    
+        } catch (error: any) {
+            console.error("Error al registrarse:", error);
+            this.setError(error.message);
         }
-        console.log("Registrado");
-        event.preventDefault();
         return true;
         // Refistrar en la BBDD
       };
@@ -61,6 +78,16 @@ export class RegisterVM {
 
     public setPasswordRepeat(passwordRepeat: string): void {
         this.passwordRepeat = passwordRepeat;
+        this.notifyChange();
+    }
+
+    private setError(message: string) {
+        this.error = message;
+        this.notifyChange();
+    }
+
+    private setSuccess(message: string) {
+        this.success = message;
         this.notifyChange();
     }
     
