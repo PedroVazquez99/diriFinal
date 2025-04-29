@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import NavBar from "./components/shared/NavBar";
 import Footer from "./components/shared/Footer";
-
+import { RegisterRoute } from "./routes/registerRoute";
 function App() {
   return (
     <>
@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<RegisterRoute><Home /></RegisterRoute>} />
         <Route path="*" element={<Login />} />
       </Routes>
 
