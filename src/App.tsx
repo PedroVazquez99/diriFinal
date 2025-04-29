@@ -5,7 +5,8 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import NavBar from "./components/shared/NavBar";
 import Footer from "./components/shared/Footer";
-import { RegisterRoute } from "./routes/registerRoute";
+import { RegisterRoute } from "./routes/RegisterRoute";
+
 function App() {
   return (
     <>
