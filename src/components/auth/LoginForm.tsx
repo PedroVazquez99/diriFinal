@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../../services/AuthService";
+import InputAdapter from "../../antDesignAdapters/buttons/InputAdapter";
 
 
 const LoginForm: React.FC = () => {
@@ -38,8 +39,7 @@ const LoginForm: React.FC = () => {
           >
             Nombre de usuario
           </label>
-          <input
-            className="shadow appearance-none border rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <InputAdapter
             id="username"
             type="text"
             value={username}
@@ -55,7 +55,7 @@ const LoginForm: React.FC = () => {
           >
             Contraseña
           </label>
-          <input
+          <InputAdapter
             className="shadow appearance-none border rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
             id="password"
             type="password"
