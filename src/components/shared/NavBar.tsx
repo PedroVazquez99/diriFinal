@@ -6,6 +6,7 @@ import { Role } from "../../models/IRole";
 import { FormattedMessage } from "react-intl";
 import { Switch } from "antd";
 import { LanguageContext } from "../../providers/LanguageProvider"; // Asegúrate de importar tu contexto
+import SwitchAdapter from "../../antDesignAdapters/buttons/SwitchAdapter";
 
 const NavBar: React.FC = () => {
   const { user, roles } = useContext(AuthContext);
@@ -22,7 +23,7 @@ const NavBar: React.FC = () => {
   };
 
   const handleLanguageSwitch = (checked: boolean) => {
-    changeLanguage(checked ? "en" : "es");
+    changeLanguage(checked ? "es" : "en");
   };
 
   return (
@@ -57,8 +58,8 @@ const NavBar: React.FC = () => {
                   </button>
                 </li>}
               <li>
-                <Switch
-                  checked={locale === "en"}
+                <SwitchAdapter
+                  value={locale === "es"}
                   onChange={handleLanguageSwitch}
                   checkedChildren="EN"
                   unCheckedChildren="ES"
