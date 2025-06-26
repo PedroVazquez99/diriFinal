@@ -1,9 +1,10 @@
 import { IMovie, mapMovieFromApi } from "../models/IMovie";
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 // Este archivo simula ser un ViewModel que se encarga de manejar la lógica de la vista
 export const fetchItemsFromAPI = async (): Promise<IMovie[]> => {
     try {
-        const apiKey = "147cfb98f6b24e069ef83b302dd2924b"; // Replace with your TMDb API key
+        const apiKey = API_KEY;
         const response = await fetch(
             `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=es-ES&page=1`
         );
