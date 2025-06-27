@@ -1,9 +1,10 @@
 // src/pages/InfoMovie.tsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Spin } from "antd";
+import { Button, Spin } from "antd";
 import MovieInfo from "../components/movie/MovieInfo";
 import MovieComments from "../components/movie/MovieComments";
+import MovieSimilar from "../components/movie/SimilarMovies";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -20,6 +21,7 @@ const InfoMoviePage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [movie, setMovie] = useState<MovieDetails | null>(null);
     const [loading, setLoading] = useState(true);
+    const [showSimilar, setShowSimilar] = useState(false); // Estado para mostrar similares
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -48,6 +50,16 @@ const InfoMoviePage: React.FC = () => {
     return (
         <>
             <MovieInfo movie={movie} />
+            <div className="flex justify-center my-4">
+                <Button type="primary" onClick={() => setShowSimilar((v) => !v)}>
+                    {showSimilar ? "Ocultar similares" : "Ver películas similares"}
+                </Button>
+            </div>
+            {showSimilar && (
+                <div className="flex justify-center">
+                    <MovieSimilar movieId={id!} />
+                </div>
+            )}
             <MovieComments movieId={id!} />
         </>
     );
