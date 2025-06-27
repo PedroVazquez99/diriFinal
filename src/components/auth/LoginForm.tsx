@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../../services/AuthService";
 import InputAdapter from "../../antDesignAdapters/buttons/InputAdapter";
+import ButtonAdapter from "../../antDesignAdapters/buttons/ButtonAdapter";
 
 
 const LoginForm: React.FC = () => {
@@ -27,7 +28,6 @@ const LoginForm: React.FC = () => {
     <div className="flex items-center justify-center min-h-screen bg-blue-200 rounded-xl">
       <form
         className="bg-white shadow-lg rounded-lg px-10 py-12 w-full max-w-md"
-        onSubmit={(e) => handleLogin(e)}
       >
         <h2 className="text-3xl font-extrabold mb-8 text-center text-gray-800">
           Login
@@ -66,18 +66,12 @@ const LoginForm: React.FC = () => {
           />
         </div>
         <div className="flex items-center justify-center">
-          <button
+          <ButtonAdapter
             className="bg-blue-500 text-white font-bold py-3 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 m-1 w-100"
-            type="submit"
+            onClick={(e) => handleLogin(e)}
           >
             Iniciar
-          </button>
-          <button
-            className="bg-blue-500 text-white font-bold py-3 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 w-100"
-            type="submit"
-          >
-            Registrar
-          </button>
+          </ButtonAdapter>
         </div>
       </form>
     </div>
