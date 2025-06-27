@@ -1,7 +1,6 @@
-// src/components/MovieComments.tsx
 import React, { useEffect, useState } from "react";
-import { db } from "../../../firebase/firebase"; // Adjust the import path as necessary
-import { ref as dbRef, push, onValue, update } from "firebase/database";
+import { db } from "../../../firebase/firebase";
+import { ref as dbRef, set, onValue, update } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 interface Props {
@@ -9,35 +8,32 @@ interface Props {
 }
 
 interface Comment {
-    key: string;
     user: string;
-    userId: string;
     text: string;
     timestamp: number;
 }
 
 const MovieComments: React.FC<Props> = ({ movieId }) => {
     const [comment, setComment] = useState("");
-    const [userName, setUserName] = useState("");
     const [comments, setComments] = useState<Comment[]>([]);
-    const [editing, setEditing] = useState<null | { key: string; text: string }>(null);
+    const [editing, setEditing] = useState<null | { email: string; text: string }>(null);
 
     const auth = getAuth();
     const currentUser = auth.currentUser;
-    const currentUserId = currentUser?.uid || null;
+    const userEmail = currentUser?.email || "anon@example_com";
+    // Firebase keys can't have ".", so replace by "_"
+    const safeEmail = userEmail.replace(/\./g, "_");
 
+    // Guardar comentario bajo comments/{movieId}/{safeEmail}
     const postComment = async (
         movieId: string,
         user: string,
-        text: string,
-        userId: string | null
+        text: string
     ) => {
-        const commentsRef = dbRef(db, `comments/${movieId}`);
-        await push(commentsRef, {
+        const commentRef = dbRef(db, `comments/${movieId}/${safeEmail}`);
+        await set(commentRef, {
             user,
-            userId: userId ?? "anon",
             text,
-            movieId,
             timestamp: Date.now(),
         });
     };
@@ -45,7 +41,7 @@ const MovieComments: React.FC<Props> = ({ movieId }) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!comment.trim()) return;
-        await postComment(movieId, userName || "Anónimo", comment, currentUserId);
+        await postComment(movieId, userEmail, comment);
         setComment("");
     };
 
@@ -54,9 +50,10 @@ const MovieComments: React.FC<Props> = ({ movieId }) => {
         const unsubscribe = onValue(commentsRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                const arr = Object.entries(data).map(([key, value]: any) => ({
+                // data: { safeEmail: { user, text, timestamp }, ... }
+                const arr = Object.entries(data).map(([email, value]: any) => ({
                     ...value,
-                    key,
+                    email,
                 }));
                 arr.sort((a, b) => b.timestamp - a.timestamp);
                 setComments(arr);
@@ -74,14 +71,6 @@ const MovieComments: React.FC<Props> = ({ movieId }) => {
                 onSubmit={handleSubmit}
                 className="mt-8 flex flex-col gap-2 max-w-md mx-auto"
             >
-                <input
-                    type="text"
-                    placeholder="Tu nombre"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
-                    className="border rounded px-2 py-1"
-                    required
-                />
                 <textarea
                     placeholder="Escribe un comentario..."
                     value={comment}
@@ -100,13 +89,13 @@ const MovieComments: React.FC<Props> = ({ movieId }) => {
             <div className="mt-10 max-w-md mx-auto">
                 <h2 className="text-xl font-semibold mb-4">Comentarios</h2>
                 {comments.map((c) => (
-                    <div key={c.key} className="mb-4 p-4 bg-white rounded shadow">
+                    <div key={c.user} className="mb-4 p-4 bg-white rounded shadow">
                         <p className="text-sm text-gray-600 mb-1">{c.user}</p>
                         <p className="text-gray-800">{c.text}</p>
-                        {c.userId === currentUserId && (
+                        {c.user === safeEmail && (
                             <button
                                 className="text-blue-500 text-sm mt-2"
-                                onClick={() => setEditing({ key: c.key, text: c.text })}
+                                onClick={() => setEditing({ email: c.user, text: c.text })}
                             >
                                 Editar
                             </button>
@@ -119,7 +108,7 @@ const MovieComments: React.FC<Props> = ({ movieId }) => {
                 <form
                     onSubmit={async (e) => {
                         e.preventDefault();
-                        const commentRef = dbRef(db, `comments/${movieId}/${editing.key}`);
+                        const commentRef = dbRef(db, `comments/${movieId}/${editing.email}`);
                         await update(commentRef, { text: editing.text });
                         setEditing(null);
                     }}
