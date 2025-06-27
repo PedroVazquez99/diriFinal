@@ -53,10 +53,11 @@ const NavBar: React.FC = () => {
                 <li>
                   <button onClick={handleLogOut} className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">
                     <FormattedMessage
-                      id="app.label.register"
+                      id="menu.label.logout"
                     />
                   </button>
-                </li>}
+                </li>
+              }
               <li>
                 <SwitchAdapter
                   value={locale === "es"}
