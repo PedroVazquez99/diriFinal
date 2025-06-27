@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import NavBar from "./components/shared/NavBar";
 import Footer from "./components/shared/Footer";
 import { RegisterRoute } from "./routes/RegisterRoute";
-import InfoMovie from "./pages/InfoMovie";
+import InfoMoviePage from "./pages/InfoMoviePage";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<RegisterRoute><Home /></RegisterRoute>} />
-        <Route path="/movie/:id" element={<InfoMovie />} />
+        <Route path="/movie/:id" element={<RegisterRoute><InfoMoviePage /></RegisterRoute>} />
         <Route path="*" element={<Login />} />
       </Routes>
 
