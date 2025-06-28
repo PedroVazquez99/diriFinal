@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { IMovie } from '../../models/IMovie';
+import ImageAdapter from '../../antDesignAdapters/images/ImageAdapter';
 
 interface SimilarMoviesProps {
     movieId: string;
 }
 
 const SimilarMovies: React.FC<SimilarMoviesProps> = ({ movieId }: SimilarMoviesProps) => {
-    const [peliculas, setPeliculas] = useState([]);
+    const [peliculas, setPeliculas] = useState<IMovie[]>([]);
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
     useEffect(() => {
@@ -28,10 +30,10 @@ const SimilarMovies: React.FC<SimilarMoviesProps> = ({ movieId }: SimilarMoviesP
 
     return (
         <div>
-            <h2>Películas Similares</h2>
             <ul>
                 {peliculas.map((pelicula) => (
                     <li key={pelicula.id}>
+                        <ImageAdapter width={100} src={pelicula.poster_path} />
                         <strong>{pelicula.title}</strong> ({pelicula.release_date?.slice(0, 4)})
                     </li>
                 ))}
