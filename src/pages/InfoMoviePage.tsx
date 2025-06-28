@@ -5,6 +5,7 @@ import { Button, Spin } from "antd";
 import MovieInfo from "../components/movie/MovieInfo";
 import MovieComments from "../components/movie/MovieComments";
 import MovieSimilar from "../components/movie/SimilarMovies";
+import ModalAdapter from "../antDesignAdapters/modals/ModalAdapter";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -57,7 +58,9 @@ const InfoMoviePage: React.FC = () => {
             </div>
             {showSimilar && (
                 <div className="flex justify-center">
-                    <MovieSimilar movieId={id!} />
+                    <ModalAdapter title="Películas similares" open={showSimilar} onClose={() => setShowSimilar(false)}>
+                        <MovieSimilar movieId={id!} />
+                    </ModalAdapter>
                 </div>
             )}
             <MovieComments movieId={id!} />

@@ -1,6 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const SimilarMovies = ({ movieId }) => {
+interface SimilarMoviesProps {
+    movieId: string;
+}
+
+const SimilarMovies: React.FC<SimilarMoviesProps> = ({ movieId }: SimilarMoviesProps) => {
     const [peliculas, setPeliculas] = useState([]);
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 

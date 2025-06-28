@@ -67,11 +67,12 @@ const LoginForm: React.FC = () => {
         </div>
         <div className="flex items-center justify-center">
           <ButtonAdapter
-            className="bg-blue-500 text-white font-bold py-3 px-6 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 m-1 w-100"
+            className="bg-blue-600 text-white px-1 py-2 rounded hover:bg-blue-700 transition"
             onClick={(e) => handleLogin(e)}
           >
             Iniciar
           </ButtonAdapter>
+
         </div>
       </form>
     </div>

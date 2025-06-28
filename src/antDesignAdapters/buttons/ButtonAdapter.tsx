@@ -1,7 +1,6 @@
 import { Button, ButtonProps } from 'antd';
 
-interface ButtonAdapterProps extends ButtonProps {
-    className?: string;
+interface ButtonAdapterProps {
     children?: React.ReactNode;
     onChange?: () => void;
 }
