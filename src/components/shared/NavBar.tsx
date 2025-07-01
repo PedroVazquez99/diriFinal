@@ -3,9 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../contexts/AuthContext";
 import { authService } from "../../services/AuthService";
 import { Role } from "../../models/IRole";
+import { FormattedMessage } from "react-intl";
+import { Switch } from "antd";
+import { LanguageContext } from "../../providers/LanguageProvider"; // Asegúrate de importar tu contexto
+import SwitchAdapter from "../../antDesignAdapters/buttons/SwitchAdapter";
+
 const NavBar: React.FC = () => {
   const { user, roles } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { locale, changeLanguage } = useContext(LanguageContext);
+
   const handleLogOut = async () => {
     try {
       await authService.signOut();
@@ -13,6 +20,10 @@ const NavBar: React.FC = () => {
     } catch (error) {
       console.error("Error signing out:", error);
     }
+  };
+
+  const handleLanguageSwitch = (checked: boolean) => {
+    changeLanguage(checked ? "es" : "en");
   };
 
   return (
@@ -31,10 +42,31 @@ const NavBar: React.FC = () => {
               {!user && (
                 <>
                   <li><Link to="/login" className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">Login</Link></li>
-                  <li><Link to="/register" className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">Registro</Link></li>
+                  <li><Link to="/register" className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">
+                    <FormattedMessage
+                      id="app.label.register"
+                    />
+                  </Link></li>
                 </>
               )}
-              {user && <li><button onClick={handleLogOut} className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">Logout</button></li>}
+              {user &&
+                <li>
+                  <button onClick={handleLogOut} className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">
+                    <FormattedMessage
+                      id="menu.label.logout"
+                    />
+                  </button>
+                </li>
+              }
+              <li>
+                <SwitchAdapter
+                  value={locale === "es"}
+                  onChange={handleLanguageSwitch}
+                  checkedChildren="EN"
+                  unCheckedChildren="ES"
+                  style={{ backgroundColor: "#1890ff" }}
+                />
+              </li>
             </ul>
           </section>
         </div>
