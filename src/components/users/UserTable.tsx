@@ -13,7 +13,12 @@ const UserTable: React.FC<Props> = ({ users, loading, onEdit, onDelete }) => {
 
     const columns = [
         { title: "Email", dataIndex: "email", key: "email" },
-        { title: "Rol", dataIndex: "role", key: "role" },
+        {
+            title: "Rol",
+            key: "role",
+            render: (_: any, user: any) =>
+                user.role && user.role == true ? "Admin" : "Usuario",
+        },
         {
             title: "Acciones",
             key: "actions",

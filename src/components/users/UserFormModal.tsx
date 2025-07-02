@@ -18,7 +18,7 @@ const UserFormModal: React.FC<Props> = ({ open, user, onCancel, onSubmit }) => {
 
     const handleOk = () => {
         form.validateFields().then((values) => {
-            onSubmit({ ...user, ...values });
+            onSubmit({ ...user, ...values, roles: { admin: values.role === "admin" } });
         });
     };
 
