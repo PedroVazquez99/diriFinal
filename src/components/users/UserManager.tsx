@@ -2,24 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Card, Button, message } from "antd";
 import UserTable from "./UserTable";
 import UserFormModal from "./UserFormModal";
-import { getUsers, addUser, updateUser, deleteUser } from "../../services/UserService";
+import { useAppDispatch, useAppSelector } from "../../hooks/ReduxHook";
+import { fetchUsers, createUser, editUser, removeUser } from "../../slices/UserSlice";
 
 const UserManager: React.FC = () => {
-    const [users, setUsers] = useState<any[]>([]);
-    const [loading, setLoading] = useState(false);
+    const dispatch = useAppDispatch();
+    const { items: users, loading } = useAppSelector((state) => state.users);
     const [modalOpen, setModalOpen] = useState(false);
     const [editingUser, setEditingUser] = useState<any | null>(null);
 
-    const fetchUsers = async () => {
-        setLoading(true);
-        const data = await getUsers();
-        setUsers(data);
-        setLoading(false);
-    };
-
     useEffect(() => {
-        fetchUsers();
-    }, []);
+        dispatch(fetchUsers());
+    }, [dispatch]);
 
     const handleAdd = () => {
         setEditingUser(null);
@@ -32,21 +26,19 @@ const UserManager: React.FC = () => {
     };
 
     const handleDelete = async (userId: string) => {
-        await deleteUser(userId);
+        await dispatch(removeUser(userId));
         message.success("Usuario eliminado");
-        fetchUsers();
     };
 
     const handleSubmit = async (user: any) => {
         if (editingUser) {
-            await updateUser(user);
+            await dispatch(editUser(user));
             message.success("Usuario actualizado");
         } else {
-            await addUser(user);
+            await dispatch(createUser(user));
             message.success("Usuario creado");
         }
         setModalOpen(false);
-        fetchUsers();
     };
 
     return (
