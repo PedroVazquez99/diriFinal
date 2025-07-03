@@ -1,5 +1,9 @@
 // src/components/MovieInfo.tsx
 import React from "react";
+import { Card, Typography, Tag, Rate, Space, Divider } from "antd";
+import { CalendarOutlined, StarFilled, TagsOutlined, FileTextOutlined } from "@ant-design/icons";
+
+const { Title, Paragraph, Text } = Typography;
 
 interface Props {
     movie: {
@@ -14,26 +18,57 @@ interface Props {
 
 const MovieInfo: React.FC<Props> = ({ movie }) => {
     return (
-        <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 to-blue-200 p-8">
-            <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                className="w-72 rounded-lg shadow-lg mb-6 md:mb-0 md:mr-10"
-            />
-            <div className="max-w-xl">
-                <h1 className="text-4xl font-bold mb-4">{movie.title}</h1>
-                <p className="text-gray-600 mb-2">
-                    <span className="font-semibold">Estreno:</span> {movie.release_date}
-                </p>
-                <p className="text-gray-600 mb-2">
-                    <span className="font-semibold">Valoración:</span> {movie.vote_average}
-                </p>
-                <p className="text-gray-600 mb-2">
-                    <span className="font-semibold">Géneros:</span>{" "}
-                    {movie.genres.map((g) => g.name).join(", ")}
-                </p>
-                <p className="mt-4 text-gray-800">{movie.overview}</p>
-            </div>
+        <div
+            style={{
+                minHeight: "100vh",
+                background: "linear-gradient(135deg, #f0f5ff 0%, #e6f7ff 100%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: 32,
+            }}
+        >
+            <Card
+                hoverable
+                style={{ maxWidth: 900, width: "100%", display: "flex", boxShadow: "0 8px 40px #91d5ff55" }}
+                bodyStyle={{ display: "flex", flexDirection: "row", padding: 0 }}
+            >
+                <img
+                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                    alt={movie.title}
+                    style={{
+                        width: 300,
+                        objectFit: "cover",
+                        borderRadius: "8px 0 0 8px",
+                        boxShadow: "0 4px 24px #1890ff22",
+                    }}
+                />
+                <div style={{ padding: 32, flex: 1 }}>
+                    <Title level={2} style={{ marginBottom: 16 }}>
+                        {movie.title}
+                    </Title>
+                    <Space direction="vertical" size="middle" style={{ width: "100%" }}>
+                        <Text type="secondary">
+                            <CalendarOutlined /> <b>Estreno:</b> {movie.release_date}
+                        </Text>
+                        <Text type="secondary">
+                            <TagsOutlined /> <b>Géneros:</b>{" "}
+                            {movie.genres.map((g) => (
+                                <Tag color="blue" key={g.id} style={{ marginRight: 4 }}>
+                                    {g.name}
+                                </Tag>
+                            ))}
+                        </Text>
+                        <Text type="secondary">
+                            <Rate allowHalf disabled value={movie.vote_average / 2} style={{ fontSize: 18 }} />{" "}
+                        </Text>
+                        <Divider />
+                        <Paragraph>
+                            {movie.overview}
+                        </Paragraph>
+                    </Space>
+                </div>
+            </Card>
         </div>
     );
 };
