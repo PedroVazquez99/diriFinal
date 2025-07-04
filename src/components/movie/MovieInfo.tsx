@@ -1,12 +1,12 @@
-// src/components/MovieInfo.tsx
-import React from "react";
-import { Card, Typography, Tag, Rate, Space, Divider } from "antd";
-import { CalendarOutlined, StarFilled, TagsOutlined, FileTextOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
+import { Card, Typography, Tag, Rate, Space, Divider, Button, Modal } from "antd";
+import { CalendarOutlined, TagsOutlined, PlayCircleOutlined } from "@ant-design/icons";
 
 const { Title, Paragraph, Text } = Typography;
 
 interface Props {
     movie: {
+        id: number;
         title: string;
         overview: string;
         poster_path: string;
@@ -16,7 +16,38 @@ interface Props {
     };
 }
 
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
 const MovieInfo: React.FC<Props> = ({ movie }) => {
+    const [trailerKey, setTrailerKey] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const fetchTrailer = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch(
+                `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${API_KEY}&language=es-ES`
+            );
+            const data = await res.json();
+            const trailer = data.results?.find(
+                (v: any) =>
+                    v.site === "YouTube" &&
+                    (v.type === "Trailer" || v.type === "Teaser")
+            );
+            if (trailer) {
+                setTrailerKey(trailer.key);
+                setModalOpen(true);
+            } else {
+                setTrailerKey(null);
+                alert("No se encontró tráiler para esta película.");
+            }
+        } catch {
+            alert("Error al buscar el tráiler.");
+        }
+        setLoading(false);
+    };
+
     return (
         <div
             style={{
@@ -62,6 +93,14 @@ const MovieInfo: React.FC<Props> = ({ movie }) => {
                         <Text type="secondary">
                             <Rate allowHalf disabled value={movie.vote_average / 2} style={{ fontSize: 18 }} />{" "}
                         </Text>
+                        <Button
+                            type="primary"
+                            icon={<PlayCircleOutlined />}
+                            loading={loading}
+                            onClick={fetchTrailer}
+                        >
+                            Ver tráiler
+                        </Button>
                         <Divider />
                         <Paragraph>
                             {movie.overview}
@@ -69,6 +108,27 @@ const MovieInfo: React.FC<Props> = ({ movie }) => {
                     </Space>
                 </div>
             </Card>
+            <Modal
+                open={modalOpen}
+                onCancel={() => setModalOpen(false)}
+                footer={null}
+                width={720}
+                bodyStyle={{ padding: 18, display: "flex", justifyContent: "center" }}
+                destroyOnClose
+            >
+                {trailerKey && (
+                    <iframe
+                        width="700"
+                        height="400"
+                        src={`https://www.youtube.com/embed/${trailerKey}`}
+                        title="Tráiler"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        style={{ borderRadius: 8, margin: 0 }}
+                    />
+                )}
+            </Modal>
         </div>
     );
 };
