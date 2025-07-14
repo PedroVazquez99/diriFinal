@@ -1,6 +1,11 @@
 {
     "app.label.login" : "Inicio de sesión",
     "app.label.register" : "Registro",
+    "app.label.home" : "Inicio",
     "app.film.releases" : "Últimos estrenos",
-    "menu.label.logout" : "Cerrar sesión"
+    "menu.label.logout" : "Cerrar sesión",
+    "app.title.manageUsers" : "Gestión de Usuarios",
+    "menu.label.admin" : "Administración",
+    "app.label.details" : "Ver",
+    "app.label.search" : "Buscar pelicula..."
 }

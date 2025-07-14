@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Input, List, Avatar, Spin } from "antd";
+import { FormattedMessage } from "react-intl";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -58,7 +59,7 @@ const MovieSearchBar: React.FC<Props> = ({ onSelect }) => {
     return (
         <div style={{ position: "relative", minWidth: 300 }}>
             <Input.Search
-                placeholder="Buscar películas..."
+                placeholder={<FormattedMessage id="app.label.search" />}
                 value={query}
                 onChange={e => handleSearch(e.target.value)}
                 loading={loading}

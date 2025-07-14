@@ -1,6 +1,7 @@
 import React from 'react';
 import { IMovie } from '../models/IMovie';
 import { Button } from 'antd';
+import { FormattedMessage } from 'react-intl';
 
 interface MovieProps extends IMovie {
     onClick?: () => void;
@@ -24,7 +25,7 @@ const Movie: React.FC<MovieProps> = ({ onClick, ...item }) => {
             <Button
                 onClick={onClick}
             >
-                Ver
+                <FormattedMessage id="app.label.details" />
             </Button>
         </div>
     );

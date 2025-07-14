@@ -3,8 +3,9 @@ import { MovieVM } from '../viewModels/MovieVM';
 import { useMovieViewModel } from '../hooks/MovieHooks';
 import { IMovie } from '../models/IMovie';
 import Movie from './Movie';
-import { useNavigate } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import MovieSearchBar from './movie/MovieSearchBar';
+import { FormattedMessage } from 'react-intl';
 
 // Creamos una instancia del ViewModel fuera del componente. En un caso real, se podría inyectar desde un contexto, provider, etc.
 const movieViewModel = new MovieVM(); // --> Instancia del ViewModel
@@ -22,7 +23,7 @@ const MovieList: React.FC = () => {
             <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg overflow-hidden">
                 <div className="relative px-6 py-4 border-b border-gray-300 flex items-center">
                     <h1 className="title text-3xl font-bold text-gray-800 w-full text-center m-0">
-                        Últimos estrenos
+                        <FormattedMessage id="app.film.releases" />
                     </h1>
                     <div className="absolute right-6">
                         <MovieSearchBar onSelect={handleClick} />

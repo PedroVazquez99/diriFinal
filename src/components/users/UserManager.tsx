@@ -5,6 +5,7 @@ import UserFormModal from "./UserFormModal";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxHook";
 import { fetchUsers, createUser, editUser, removeUser } from "../../slices/UserSlice";
 import { PlusOutlined } from '@ant-design/icons';
+import { FormattedMessage } from "react-intl";
 
 
 const UserManager: React.FC = () => {
@@ -63,8 +64,9 @@ const UserManager: React.FC = () => {
     });
 
     return (
+
         <Card
-            title="Gestión de Usuarios"
+            title={<FormattedMessage id="app.title.manageUsers" />}
             extra={<Button type="primary"
                 onClick={handleAdd}
                 icon={<PlusOutlined />}
