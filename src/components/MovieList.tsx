@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { MovieVM } from '../viewModels/MovieVM';
 import { useMovieViewModel } from '../hooks/MovieHooks';
 import { IMovie } from '../models/IMovie';
-import Movie from './Movie';
 import { useNavigate } from 'react-router-dom';
 import MovieSearchBar from './movie/MovieSearchBar';
 
-// Creamos una instancia del ViewModel fuera del componente. En un caso real, se podría inyectar desde un contexto, provider, etc.
-const movieViewModel = new MovieVM(); // --> Instancia del ViewModel
+// Lazy load del componente Movie
+const LazyMovie = lazy(() => import('./Movie'));
+
+// Instancia del ViewModel
+const movieViewModel = new MovieVM();
 
 const MovieList: React.FC = () => {
-    const { items } = useMovieViewModel(movieViewModel); // Hook con instancia del ViewModel (MovieVM)
+    const { items } = useMovieViewModel(movieViewModel);
     const navigate = useNavigate();
 
     const handleClick = (id: number) => {
@@ -29,9 +31,11 @@ const MovieList: React.FC = () => {
                     </div>
                 </div>
                 <div className="p-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {items.map((item: IMovie) => (
-                        <Movie key={item.id} {...item} onClick={() => handleClick(item.id)} />
-                    ))}
+                    <Suspense fallback={<div>Cargando películas...</div>}>
+                        {items.map((item: IMovie) => (
+                            <LazyMovie key={item.id} {...item} onClick={() => handleClick(item.id)} />
+                        ))}
+                    </Suspense>
                 </div>
             </div>
         </div>
