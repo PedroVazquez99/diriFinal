@@ -6,7 +6,7 @@ const { Title, Paragraph, Text } = Typography;
 
 interface Props {
     movie: {
-        id: number;
+        id?: number;
         title: string;
         overview: string;
         poster_path: string;

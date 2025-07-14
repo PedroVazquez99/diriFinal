@@ -1,7 +1,9 @@
 export interface IMovie {
     id: number,
     title: string,
-    img: string
+    img: string,
+    release_date?: string,
+    poster_path?: string,
 }
 
 // Mapeamos la respuesta de la API a nuestro modelo

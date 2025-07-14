@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../../services/AuthService";
 import InputAdapter from "../../antDesignAdapters/buttons/InputAdapter";
-import ButtonAdapter from "../../antDesignAdapters/buttons/ButtonAdapter";
 import { Button } from "antd";
 
 
@@ -12,9 +11,10 @@ const LoginForm: React.FC = () => {
   const [error, setError] = useState<string>('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setError('');
+    console.log(error);
     try {
       const userCredential
         = await authService.signIn(username, password);
@@ -44,7 +44,7 @@ const LoginForm: React.FC = () => {
             id="username"
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
             placeholder="Ingresa tu usuario"
             required
           />
@@ -61,7 +61,7 @@ const LoginForm: React.FC = () => {
             id="password"
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             placeholder="Ingresa tu contraseña"
             required
           />
@@ -69,7 +69,7 @@ const LoginForm: React.FC = () => {
         <div className="flex items-center justify-center">
           <Button
             className="bg-blue-600 text-white px-1 py-2 rounded hover:bg-blue-700 transition"
-            onClick={(e) => handleLogin(e)}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleLogin(e)}
           >
             Iniciar
           </Button>

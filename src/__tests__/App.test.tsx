@@ -16,6 +16,7 @@ const mockNavigate = vi.fn();
 vi.mock("react-router-dom", async (importActual) => {
     const actual = await importActual();
     return {
+        // @ts-expect-error: spread requires object type
         ...actual,
         useNavigate: () => mockNavigate,
     };
