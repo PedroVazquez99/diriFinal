@@ -8,12 +8,10 @@ export class RegisterVM {
     private subscribers: Array<() => void> = [];
     private usuario: IUsuario;
     private passwordRepeat: string = "";
-    
     private error: string = '';
     private success: string = '';
-    
     constructor(){
-        this.usuario = {nombre: "", password: "", role: Role.INVITADO, email: ""};
+        this.usuario = {id:"0", nombre: "", password: "", role: Role.INVITADO, email: ""};
     }
 
     // Meter usuario
@@ -40,6 +38,7 @@ export class RegisterVM {
             console.log("Usuario registrado:", this.usuario);
             const userCredential = await authService.signUp(this.usuario.email, this.usuario.password);
             console.log("Usuario registrado:", userCredential);
+            console.log("Usuario registrado con ID:", this.success, this.error);
             // Crear registro en BBDD con roles iniciales (admin: false)
             await authService.setUserRoles(userCredential.user.uid, {
                 email: userCredential.user.email,

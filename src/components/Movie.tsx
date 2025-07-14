@@ -1,6 +1,6 @@
 import React from 'react';
 import { IMovie } from '../models/IMovie';
-import ButtonAdapter from '../antDesignAdapters/buttons/ButtonAdapter';
+import { Button } from 'antd';
 
 interface MovieProps extends IMovie {
     onClick?: () => void;
@@ -21,12 +21,11 @@ const Movie: React.FC<MovieProps> = ({ onClick, ...item }) => {
             <h2 className="text-lg font-semibold text-gray-800 mb-2">
                 {item.title}
             </h2>
-            <ButtonAdapter
-                className="bg-green-800 text-white py-1 px-4 rounded-md shadow hover:bg-green-600 transition-all self-center cursor-pointer"
+            <Button
                 onClick={onClick}
             >
                 Ver
-            </ButtonAdapter>
+            </Button>
         </div>
     );
 };

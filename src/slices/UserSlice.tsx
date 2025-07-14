@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getUsers, addUser, updateUser, deleteUser } from "../services/UserService";
+import { IUsuario } from "../models/IUsuario";
 
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
     return await getUsers();
@@ -20,18 +21,26 @@ export const removeUser = createAsyncThunk("users/removeUser", async (id: string
     dispatch(fetchUsers());
 });
 
+interface UsersState {
+    items: IUsuario[];
+    loading: boolean;
+}
+const initialState: UsersState = {
+    items: [],
+    loading: false,
+};
+
+
 const usersSlice = createSlice({
     name: "users",
-    initialState: {
-        items: [],
-        loading: false,
-    },
+    initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchUsers.pending, (state) => {
                 state.loading = true;
             })
+
             .addCase(fetchUsers.fulfilled, (state, action) => {
                 state.items = action.payload;
                 state.loading = false;

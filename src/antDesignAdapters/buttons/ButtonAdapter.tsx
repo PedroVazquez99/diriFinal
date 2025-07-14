@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from 'antd';
+import { Button } from 'antd';
 
 interface ButtonAdapterProps {
     children?: React.ReactNode;

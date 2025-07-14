@@ -4,7 +4,6 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { authService } from "../../services/AuthService";
 import { Role } from "../../models/IRole";
 import { FormattedMessage } from "react-intl";
-import { Switch } from "antd";
 import { LanguageContext } from "../../providers/LanguageProvider"; // Asegúrate de importar tu contexto
 import SwitchAdapter from "../../antDesignAdapters/buttons/SwitchAdapter";
 
