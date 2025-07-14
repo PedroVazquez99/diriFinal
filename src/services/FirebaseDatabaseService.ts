@@ -5,33 +5,30 @@ import { IUserDatabaseService } from '../models/IUserDatabaseService';
 
 export class FirebaseDatabaseService implements IUserDatabaseService {
     async getUserRoles(uid: string): Promise<Role[]> {
+        
         const db = getDatabase(app);
         const rolesRef = ref(db, `users/${uid}/roles`);
         const snapshot = await get(rolesRef);
 
         if (snapshot.exists()) {
+            console.log('Roles obtenidos:', snapshot.val());
             const rolesData = snapshot.val();
-            const roles: Role[] = [];
-
-            if (rolesData.admin === true) {
-                roles.push(Role.ADMIN);
+            const roles: Role[] = []; 
+            if (rolesData.roles.admin === true) { 
+                roles.push(Role.ADMIN); 
             }
-
-            // Aquí se pueden agregar otros roles según se requiera.
-            if (roles.length === 0) {
-                // Si no se ha asignado ningún rol, se asume el rol de usuario.
-                roles.push(Role.INVITADO);
-            }
-
-            return roles;
+            if (roles.length === 0) { 
+                // Si no se ha asignado ningún rol, se asume el rol de usuario. 
+                roles.push(Role.REGISTRADO); 
+            } 
+            return roles; 
         }
-
-        return [Role.INVITADO]; // Si no existe el usuario, se devuelve el rol de invitado por defecto.
+        return [Role.REGISTRADO];
     }
 
-    async setUserRoles(uid: string, roles: any): Promise<void> {
+    async setUserRoles(uid: string, roles: { admin: boolean }): Promise<void> {
         const db = getDatabase(app);
         const rolesRef = ref(db, `users/${uid}/roles`);
-        const snapshot = set(rolesRef, roles);
+        await set(rolesRef, { admin: !!roles.admin });
     }
 }

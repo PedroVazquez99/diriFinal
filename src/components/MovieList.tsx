@@ -3,8 +3,8 @@ import { MovieVM } from '../viewModels/MovieVM';
 import { useMovieViewModel } from '../hooks/MovieHooks';
 import { IMovie } from '../models/IMovie';
 import Movie from './Movie';
-import Search from 'antd/es/transfer/search';
 import { useNavigate } from 'react-router-dom';
+import MovieSearchBar from './movie/MovieSearchBar';
 
 // Creamos una instancia del ViewModel fuera del componente. En un caso real, se podría inyectar desde un contexto, provider, etc.
 const movieViewModel = new MovieVM(); // --> Instancia del ViewModel
@@ -25,9 +25,7 @@ const MovieList: React.FC = () => {
                         Últimos estrenos
                     </h1>
                     <div className="absolute right-6">
-                        <Search
-                            placeholder="Buscar películas..."
-                        />
+                        <MovieSearchBar onSelect={handleClick} />
                     </div>
                 </div>
                 <div className="p-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

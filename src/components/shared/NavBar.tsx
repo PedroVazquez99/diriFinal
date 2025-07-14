@@ -34,11 +34,18 @@ const NavBar: React.FC = () => {
             <ul className="hidden md:flex space-x-8">
               {user &&
                 <>
-                  <li><Link to="/" className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">Home</Link></li>
+                  <li><Link to="/home" className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">Home</Link></li>
                   <li><Link to="/dashboard" className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">Dashboard</Link></li>
                 </>
               }
-              {user && roles && roles.includes(Role.ADMIN) && <li><Link to="/admin" className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">Admin</Link></li>}
+              {console.log("Roles:", roles)}
+              {user && roles && roles.includes(Role.ADMIN) && (
+                <li>
+                  <Link to="/admin" className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">
+                    Admin
+                  </Link>
+                </li>
+              )}
               {!user && (
                 <>
                   <li><Link to="/login" className="hover:bg-blue-300 px-5 py-2 rounded-full text-sm font-medium transition duration-300">Login</Link></li>
