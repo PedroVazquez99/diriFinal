@@ -41,17 +41,22 @@ const UserTable: React.FC<Props> = ({ users, loading, onEdit, onDelete }) => {
     ];
 
     return (
-        <Table
-            rowKey="id"
-            columns={columns}
-            dataSource={users}
-            loading={loading}
-            pagination={{
-                current: page,
-                pageSize: 5,
-                onChange: setPage,
-            }}
-        />
+        <>
+            {console.log(users)}
+            <Table
+                rowKey="id"
+                columns={columns}
+                dataSource={users}
+                loading={loading}
+                pagination={{
+                    current: page,
+                    onChange: (page) => setPage(page),
+                    pageSize: 12,
+                    total: users.length,
+                    position: ['bottomCenter']
+                }}
+            />
+        </>
     );
 };
 

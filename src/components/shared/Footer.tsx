@@ -8,17 +8,6 @@ const Footer: React.FC = () => {
           <div className="text-sm font-medium tracking-wide">
             &copy; 2025 <span className="font-bold">FilmO</span>. Todos los derechos reservados.
           </div>
-          <nav className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-gray-300 text-sm font-medium transition duration-300">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-gray-300 text-sm font-medium transition duration-300">
-              Terms of Service
-            </a>
-            <a href="#" className="hover:text-gray-300 text-sm font-medium transition duration-300">
-              Contact Us
-            </a>
-          </nav>
         </div>
       </section>
     </footer>

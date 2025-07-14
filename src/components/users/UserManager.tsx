@@ -4,6 +4,9 @@ import UserTable from "./UserTable";
 import UserFormModal from "./UserFormModal";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxHook";
 import { fetchUsers, createUser, editUser, removeUser } from "../../slices/UserSlice";
+import { PlusOutlined } from '@ant-design/icons';
+import { FormattedMessage } from "react-intl";
+
 
 const UserManager: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -41,13 +44,36 @@ const UserManager: React.FC = () => {
         setModalOpen(false);
     };
 
+    const normalizedUsers = users.map((user: any) => {
+
+        if ('email' in user) {
+            // Usuario plano
+            return {
+                ...user,
+                email: user.email,
+                role: user.roles?.admin ?? false, // Asumiendo que 'roles' es un objeto con 'admin'
+            };
+        }
+
+        // Usuario con datos anidados en 'roles'
+        return {
+            ...user,
+            email: user.roles?.email ?? 'Sin email',
+            role: user.roles?.roles?.admin ?? false,
+        };
+    });
+
     return (
+
         <Card
-            title="Gestión de Usuarios"
-            extra={<Button type="primary" onClick={handleAdd}>Nuevo usuario</Button>}
+            title={<FormattedMessage id="app.title.manageUsers" />}
+            extra={<Button type="primary"
+                onClick={handleAdd}
+                icon={<PlusOutlined />}
+                size="large" />}
         >
             <UserTable
-                users={users}
+                users={normalizedUsers}
                 loading={loading}
                 onEdit={handleEdit}
                 onDelete={handleDelete}

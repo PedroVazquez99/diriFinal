@@ -1,6 +1,11 @@
 {
     "app.label.login" : "Login",
     "app.label.register" : "Sign Up",
+    "app.label.home" : "Home",
     "app.film.releases" : "Last releases",
-    "menu.label.logout" : "Log Out"
+    "menu.label.logout" : "Log Out",
+    "app.title.manageUsers" : "User Management",
+    "menu.label.admin" : "Admin",
+    "app.label.details" : "See more",
+    "app.label.search" : "Search movie..."
 }
