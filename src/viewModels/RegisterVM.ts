@@ -10,14 +10,14 @@ export class RegisterVM {
     private passwordRepeat: string = "";
     private error: string = '';
     private success: string = '';
-    constructor(){
-        this.usuario = {id:"0", nombre: "", password: "", role: Role.INVITADO, email: ""};
+    constructor() {
+        this.usuario = { id: "0", nombre: "", password: "", role: Role.INVITADO, email: "" };
     }
 
     // Meter usuario
     public async registerUsuario(newUsuario: IUsuario): Promise<void> {
         if (newUsuario) {
-            
+
             this.usuario = newUsuario; // Decimos que sera el mismo usuario
             this.usuario.role = Role.REGISTRADO; // Cambiamos el rol a registrado
 
@@ -26,20 +26,20 @@ export class RegisterVM {
         }
     }
 
-    public getUsuario(): IUsuario { return this.usuario;}
+    public getUsuario(): IUsuario { return this.usuario; }
     public getPasswordRepeat(): string { return this.passwordRepeat; }
 
-    public async handleSubmit (e: React.FormEvent<HTMLFormElement>, navigate: NavigateFunction): Promise<boolean> {
-        
+    public async handleSubmit(e: React.FormEvent<HTMLFormElement>, navigate: NavigateFunction): Promise<boolean> {
+
         e.preventDefault();
         this.setError('');
-    
+
         try {
-            console.log("Usuario registrado:", this.usuario);
+
             const userCredential = await authService.signUp(this.usuario.email, this.usuario.password);
-            console.log("Usuario registrado:", userCredential);
-            console.log("Usuario registrado con ID:", this.success, this.error);
+
             // Crear registro en BBDD con roles iniciales (admin: false)
+            console.log("userCredential", userCredential.user.email);
             await authService.setUserRoles(userCredential.user.uid, {
                 email: userCredential.user.email,
                 roles: { admin: false }
@@ -48,14 +48,14 @@ export class RegisterVM {
             setTimeout(() => {
                 navigate('/home'); // Redirigir al Dashboard después de 2 segundos
             }, 1500);
-    
+
         } catch (error: any) {
             console.error("Error al registrarse:", error);
             this.setError(error.message);
         }
         return true;
         // Refistrar en la BBDD
-      };
+    };
 
 
     // Setters
@@ -89,7 +89,7 @@ export class RegisterVM {
         this.success = message;
         this.notifyChange();
     }
-    
+
     // Suscripción a cambios
     public subscribe(callback: () => void): () => void {
         this.subscribers.push(callback);

@@ -41,13 +41,32 @@ const UserManager: React.FC = () => {
         setModalOpen(false);
     };
 
+    const normalizedUsers = users.map((user: any) => {
+
+        if ('email' in user) {
+            // Usuario plano
+            return {
+                ...user,
+                email: user.email,
+                role: user.roles?.admin ?? false, // Asumiendo que 'roles' es un objeto con 'admin'
+            };
+        }
+
+        // Usuario con datos anidados en 'roles'
+        return {
+            ...user,
+            email: user.roles?.email ?? 'Sin email',
+            role: user.roles?.roles?.admin ?? false,
+        };
+    });
+
     return (
         <Card
             title="Gestión de Usuarios"
             extra={<Button type="primary" onClick={handleAdd}>Nuevo usuario</Button>}
         >
             <UserTable
-                users={users}
+                users={normalizedUsers}
                 loading={loading}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
