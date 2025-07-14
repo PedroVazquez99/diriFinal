@@ -14,7 +14,8 @@ export class FirebaseDatabaseService implements IUserDatabaseService {
             console.log('Roles obtenidos:', snapshot.val());
             const rolesData = snapshot.val();
             const roles: Role[] = []; 
-            if (rolesData.roles.admin === true) { 
+            if (rolesData.admin === true) { 
+
                 roles.push(Role.ADMIN); 
             }
             if (roles.length === 0) { 
