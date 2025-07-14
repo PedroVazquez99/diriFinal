@@ -9,7 +9,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest --config vitest.config.ts"
+    "test": "vitest --config vitest.config.ts",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d docs"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
@@ -19,6 +21,7 @@
     "antd": "^5.26.1",
     "dayjs": "^1.11.13",
     "firebase": "^11.3.1",
+    "gh-pages": "^6.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-intl": "^7.1.11",
