@@ -4,6 +4,8 @@ import UserTable from "./UserTable";
 import UserFormModal from "./UserFormModal";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxHook";
 import { fetchUsers, createUser, editUser, removeUser } from "../../slices/UserSlice";
+import { PlusOutlined } from '@ant-design/icons';
+
 
 const UserManager: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -63,7 +65,10 @@ const UserManager: React.FC = () => {
     return (
         <Card
             title="Gestión de Usuarios"
-            extra={<Button type="primary" onClick={handleAdd}>Nuevo usuario</Button>}
+            extra={<Button type="primary"
+                onClick={handleAdd}
+                icon={<PlusOutlined />}
+                size="large" />}
         >
             <UserTable
                 users={normalizedUsers}
