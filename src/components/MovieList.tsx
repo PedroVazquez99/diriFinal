@@ -3,7 +3,7 @@ import { MovieVM } from '../viewModels/MovieVM';
 import { useMovieViewModel } from '../hooks/MovieHooks';
 import { IMovie } from '../models/IMovie';
 import Movie from './Movie';
-import { Form, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import MovieSearchBar from './movie/MovieSearchBar';
 import { FormattedMessage } from 'react-intl';
 

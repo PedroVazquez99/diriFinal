@@ -39,7 +39,6 @@ export class RegisterVM {
             const userCredential = await authService.signUp(this.usuario.email, this.usuario.password);
 
             // Crear registro en BBDD con roles iniciales (admin: false)
-            console.log("userCredential", userCredential.user.email);
             await authService.setUserRoles(userCredential.user.uid, {
                 email: userCredential.user.email,
                 roles: { admin: false }
@@ -52,6 +51,8 @@ export class RegisterVM {
         } catch (error: any) {
             console.error("Error al registrarse:", error);
             this.setError(error.message);
+            console.log("userCredential", this.success, this.error);
+
         }
         return true;
         // Refistrar en la BBDD
