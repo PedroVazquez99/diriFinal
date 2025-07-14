@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { authService } from "../../services/AuthService";
 import InputAdapter from "../../antDesignAdapters/buttons/InputAdapter";
 import ButtonAdapter from "../../antDesignAdapters/buttons/ButtonAdapter";
+import { Button } from "antd";
 
 
 const LoginForm: React.FC = () => {
@@ -66,12 +67,12 @@ const LoginForm: React.FC = () => {
           />
         </div>
         <div className="flex items-center justify-center">
-          <ButtonAdapter
+          <Button
             className="bg-blue-600 text-white px-1 py-2 rounded hover:bg-blue-700 transition"
             onClick={(e) => handleLogin(e)}
           >
             Iniciar
-          </ButtonAdapter>
+          </Button>
 
         </div>
       </form>
