@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest --config vitest.config.ts"
+    "test": "vitest --config vitest.config.ts",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d docs"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
