@@ -26,7 +26,6 @@ export class FirebaseAuthService implements IAuthService {
     } 
 
     async signUp(email: string, password: string): Promise<any> {
-        console.log("FirebaseAuthService: signUp", email, password); 
         return await createUserWithEmailAndPassword(auth, email, password); 
     } 
 

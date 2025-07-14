@@ -20,7 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<RegisterRoute><Home /></RegisterRoute>} />
         <Route path="/movie/:id" element={<RegisterRoute><InfoMoviePage /></RegisterRoute>} />
-        <Route path="/users" element={<RegisterRoute><UsersPage /></RegisterRoute>} />
+        <Route path="/admin" element={<RegisterRoute><UsersPage /></RegisterRoute>} />
         <Route path="*" element={<Login />} />
       </Routes>
 

@@ -18,7 +18,14 @@ const UserFormModal: React.FC<Props> = ({ open, user, onCancel, onSubmit }) => {
 
     const handleOk = () => {
         form.validateFields().then((values) => {
-            onSubmit({ ...user, ...values, roles: { admin: values.role === "admin" } });
+            // Elimina el campo 'role' si existe, solo usa roles.admin
+            const userToSave = {
+                ...user,
+                ...values,
+                roles: { admin: values.role === true }
+            };
+            delete userToSave.role; // Limpieza por si acaso
+            onSubmit(userToSave);
         });
     };
 
